@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Float, String, Boolean, TIMESTAMP, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, Float, String, Boolean, ForeignKey, DateTime, JSON
 from sqlalchemy.orm import declarative_base
 import datetime
 
@@ -10,7 +10,7 @@ class Rol(Base):
     __tablename__ = "roles"
     
     rol_id = Column("rol_id", Integer(), primary_key=True)
-    name = Column("name", String(50), unique=True) 
+    name = Column("name", String(50), unique=True)
 
 
 
@@ -27,6 +27,8 @@ class User(Base):
     is_active = Column("is_active", Boolean())
     rol_id = Column("rol_id", Integer(), ForeignKey("roles.rol_id"))
     creation_day = Column(DateTime, default=datetime.datetime.utcnow)
+    last_modification = Column(DateTime, default=datetime.datetime.utcnow)
+    last_login = Column(DateTime, default=datetime.datetime.utcnow)
 
 
 
@@ -35,4 +37,5 @@ class Project(Base):
     
     project_id = Column("project_id", Integer(), primary_key=True)
     name = Column("name", String(100), unique=True)
-    # owner_id = Column("owner_id", Integer(), ForeignKey('users.user_id'))
+    config = Column("config", JSON)
+    owner_id = Column("owner_id", Integer(), ForeignKey('users.user_id'))
