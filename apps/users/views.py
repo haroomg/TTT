@@ -43,3 +43,5 @@ class Login(ObtainAuthToken):
         else:
             return Response({"error":"Nombre de usuario o Contraseña incorrecta."},
                             status= status.HTTP_400_BAD_REQUEST)
+
+class Logout():pass
